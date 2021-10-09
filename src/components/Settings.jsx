@@ -14,40 +14,62 @@ export const Settings = (props) => {
     const [multiply, setMultiply] = useState(true)
     const [divide, setDivide] = useState(true)
 
+    function updateSettings() {
+        const settings = {
+            "minAdd" : minAdd,
+            "maxAdd" : maxAdd,
+            "minMultiply" : minMultiply,
+            "maxMultiply" : maxMultiply,
+            "add" : add,
+            "subtract" : subtract,
+            "multiply" : multiply,
+            "divide" : divide
+        }
+        props.setSettings(settings);
+    }
+
     function minAddRangeChanged(e) {
         setMinAdd(e.target.value);
+        updateSettings();
     }
 
     function maxAddRangeChanged(e) {
         setMaxAdd(e.target.value);
+        updateSettings();
     }
 
     function minMultiplyRangeChanged(e) {
         setMinMultiply(e.target.value);
+        updateSettings();
     }
 
     function maxMultiplyRangeChanged(e) {
         setMaxMultiply(e.target.value);
+        updateSettings();
     }
 
     function toggleAdd(e) {
         if(subtract || multiply || divide)
         setAdd(!add);
+        updateSettings();
     }
 
     function toggleSubtract(e) {
         if(add || multiply || divide)
         setSubtract(!subtract);
+        updateSettings();
     }
 
     function toggleMultiply(e) {
         if(add || subtract || divide)
         setMultiply(!multiply);
+        updateSettings();
     }
 
     function toggleDivide(e) {
         if(add || subtract || multiply)
         setDivide(!divide)
+        updateSettings();
 
     }
 
@@ -88,7 +110,7 @@ export const Settings = (props) => {
                 <button className={"transition duration-300 ease-in-out border-4 text-5xl " + (divide ? "border-green-400" : "border-red-400")} onClick={toggleDivide}>➗</button>
 
             </div>
-                <button className="text-7xl border-2 border-black rounded-xl pt-5 pb-5 pl-10 pr-10 mt-56 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Start</button>
+                <button className="text-7xl border-2 border-black rounded-xl pt-5 pb-5 pl-10 pr-10 mt-56 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500" onClick={()=>{props.setInGame(true); updateSettings()}}>Start</button>
 
 
 

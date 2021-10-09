@@ -13,6 +13,17 @@
   pointer-events: none;
 }
 
+.fadeOut{
+     opacity:0;
+     transition: opacity 0.5s;
+}
+
+.fadeIn{
+     opacity:1;
+     transition: opacity 0.5s;
+
+}
+
 
 /* @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type="range"]::-webkit-slider-thumb {
