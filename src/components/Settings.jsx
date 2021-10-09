@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 
 export const Settings = (props) => {
@@ -6,7 +6,7 @@ export const Settings = (props) => {
     const [minAdd, setMinAdd] = useState(0);
     const [maxAdd, setMaxAdd] = useState(120)
 
-    const [minMultiply, setMinMultiply] = useState(0)
+    const [maxDivide, setMaxDivide] = useState(120)
     const [maxMultiply, setMaxMultiply] = useState(120)
 
     const [add, setAdd] = useState(true)
@@ -18,12 +18,17 @@ export const Settings = (props) => {
         const settings = {
             "minAdd" : minAdd,
             "maxAdd" : maxAdd,
-            "minMultiply" : minMultiply,
+            "minDivide": 0,
+            "maxDivide" : maxDivide,
+            "maxSmallDivide": 12,
+            "minSmallDivide": 0,
+            "minMultiply" : 0,
             "maxMultiply" : maxMultiply,
             "add" : add,
             "subtract" : subtract,
             "multiply" : multiply,
-            "divide" : divide
+            "divide" : divide,
+            "seconds": 5
         }
         props.setSettings(settings);
     }
@@ -38,8 +43,8 @@ export const Settings = (props) => {
         updateSettings();
     }
 
-    function minMultiplyRangeChanged(e) {
-        setMinMultiply(e.target.value);
+    function maxDivideRangeChanged(e) {
+        setMaxDivide(e.target.value);
         updateSettings();
     }
 
@@ -94,27 +99,22 @@ export const Settings = (props) => {
                 <button className={"transition duration-300 ease-in-out border-4 text-5xl " + (subtract ? "border-green-400" : "border-red-400")} onClick={toggleSubtract}>➖</button>
 
                 <div>
-                    <p className="text-2xl">Minimum for ✖️ and ➗</p>
-                    <input className="rounded-lg overflow-hidden appearance-none bg-gray-300 h-3 w-128" type="range" value={minMultiply} onChange={minMultiplyRangeChanged} max={maxMultiply} min="0"></input>
-                    <p className="mb-7">{minMultiply}</p>
+                    <p className="text-2xl">Maximum number in ➗</p>
+                    <input className="rounded-lg overflow-hidden appearance-none bg-gray-300 h-3 w-128" type="range" value={maxDivide} onChange={maxDivideRangeChanged} max="200" min="0"></input>
+                    <p className="mb-7">{maxDivide}</p>
                 </div>
 
                 <div>
-                    <p className="text-2xl">Maximum for ✖️ and ➗</p>
-                    <input className="rounded-lg overflow-hidden appearance-none bg-gray-300 h-3 w-128" type="range" value={maxMultiply} onChange={maxMultiplyRangeChanged} max="200" min={minMultiply}></input>
+                    <p className="text-2xl">Maximum answer for ✖️</p>
+                    <input className="rounded-lg overflow-hidden appearance-none bg-gray-300 h-3 w-128" type="range" value={maxMultiply} onChange={maxMultiplyRangeChanged} max="200" min="0"></input>
                     <p className="mb-7">{maxMultiply}</p>
                 </div>
-
 
                 <button className={"transition duration-300 ease-in-out border-4 text-5xl " + (multiply ? "border-green-400" : "border-red-400")} onClick={toggleMultiply} >✖️</button>
                 <button className={"transition duration-300 ease-in-out border-4 text-5xl " + (divide ? "border-green-400" : "border-red-400")} onClick={toggleDivide}>➗</button>
 
             </div>
                 <button className="text-7xl border-2 border-black rounded-xl pt-5 pb-5 pl-10 pr-10 mt-56 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500" onClick={()=>{props.setInGame(true); updateSettings()}}>Start</button>
-
-
-
-
         </div>
     )
 }
