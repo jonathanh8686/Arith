@@ -28,7 +28,7 @@ export const Settings = (props) => {
             "subtract" : subtract,
             "multiply" : multiply,
             "divide" : divide,
-            "seconds": 5
+            "seconds": 60
         }
         props.setSettings(settings);
     }

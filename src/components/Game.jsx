@@ -4,6 +4,9 @@ import { Score } from './Score';
 import { useTimer } from 'react-timer-hook';
 import { EndScreen } from './EndScreen';
 
+import useSound from 'use-sound';
+import correctSound from "../correct.mp3"
+
 
 export const Game = (props) => {
 
@@ -25,24 +28,34 @@ export const Game = (props) => {
         restart,
     } = useTimer({ expiryTimestamp: getTimeout(), onExpire: gameEnd });
 
+    useEffect(() => {
+       if(seconds == 0) return;
+        document.title = seconds + " seconds remaining."
+        if(seconds < 10) setInputColor("border-red-400")
+        else if(seconds < 30) setInputColor("border-yellow-400")
+        else setInputColor("border-green-400")
+    }, [seconds])
+
+    const [playCorrect] = useSound(correctSound);
+
+
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState(0);
     const [score, setScore] = useState(0);
     const [showEndScreen, setShowEndScreen] = useState(false);
+    const [inputColor, setInputColor] = useState("border-green-400")
 
     useEffect(() => {
         generateQuestion()
     }, [])
 
     function gameEnd() {
-        console.log("here!");
+        document.title = "Arith"
         setShowEndScreen(true);
-
     }
 
     function generateQuestion() {
         let type = Math.floor(Math.random() * 4);
-        type = 3
         if (type == 0) { // addition
             if (!props.settings["add"]) type += 1;
             else {
@@ -64,7 +77,7 @@ export const Game = (props) => {
         else if (type == 2) { // multiplication
             if (!props.settings["multiply"]) type += 1;
             else {
-                let q1 = Math.floor(Math.random() * (props.settings["maxMultiply"] - props.settings["minMultiply"])) + props.settings["minMultiply"]
+                let q1 = Math.floor(Math.random() * (props.settings["maxSmallDivide"] - props.settings["minSmallDivide"])) + props.settings["minSmallDivide"]
                 let q2 = Math.floor(Math.random() * (props.settings["maxMultiply"] - props.settings["minMultiply"])) + props.settings["minMultiply"]
                 while (q1 * q2 > 1000) {
                     // lol don't mind this
@@ -97,6 +110,7 @@ export const Game = (props) => {
         if (e.target.value == answer) {
             generateQuestion();
             e.target.value = "";
+            playCorrect();
             setScore(score + 1);
         }
     }
@@ -115,7 +129,7 @@ export const Game = (props) => {
                 <div className="h-64 grid grid-rows-3 grid-flow-col gap-4 place-items-center">
                     <Score score={score}></Score>
                     <div className="text-8xl">{question}</div>
-                    <input type="text" onChange={answerChanged} className="w-96 h-14 block mb-2 bg-gray-100 p-2 border-2 border-indigo-500 shadow-md focus:outline-none focus:border-indigo-600" />
+                    <input type="text" onChange={answerChanged} className={"w-96 h-14 block mb-2 bg-gray-100 p-2 border-2 shadow-md focus:outline-none hover: " + inputColor + " inputColor"}  />
                 </div>
             }
             {showEndScreen && <EndScreen score={score} resetGame={reset}></EndScreen>}

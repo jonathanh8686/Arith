@@ -2,6 +2,7 @@
   "name": "arith",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@craco/craco": "^6.3.0",
     "@testing-library/jest-dom": "^5.14.1",
@@ -13,7 +14,10 @@
     "react-fade-in": "^2.0.1",
     "react-scripts": "4.0.3",
     "react-timer-hook": "^3.0.5",
-    "web-vitals": "^1.1.2"
+    "use-sound": "^4.0.1",
+    "web-vitals": "^1.1.2",
+    "autoprefixer": "^9.8.8",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16"
   },
   "scripts": {
     "eject": "react-scripts eject",
@@ -40,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.3",
     "autoprefixer": "^9.8.8",
     "postcss": "^7.0.39",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16"
